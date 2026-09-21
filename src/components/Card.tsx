@@ -17,7 +17,7 @@ export default function Card({ slide, onSelect }: Props) {
       aria-label={`${slide.student} — ${VARIANT_LABEL[slide.variant]}`}
     >
       <div className="card__frame">
-        <SiteFrame url={slide.url} title={slide.id} />
+        <SiteFrame url={slide.url} title={slide.id} layoutWidth={1024} />
       </div>
       <Label className="label--variant">{VARIANT_LABEL[slide.variant]}</Label>
     </button>
