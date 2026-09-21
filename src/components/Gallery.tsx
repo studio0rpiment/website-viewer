@@ -7,16 +7,16 @@ interface Props {
 }
 
 export default function Gallery({ slides, onSelect }: Props) {
-  // Group slides by student, preserving order.
+  // Group slides by entry, preserving order.
   const groups = new Map<string, Slide[]>()
   for (const s of slides) {
-    groups.set(s.student, [...(groups.get(s.student) ?? []), s])
+    groups.set(s.entryId, [...(groups.get(s.entryId) ?? []), s])
   }
 
   return (
     <main className="gallery">
-      {[...groups].map(([name, pair]) => (
-        <StudentGroup key={name} name={name} slides={pair} onSelect={onSelect} />
+      {[...groups].map(([id, pair]) => (
+        <StudentGroup key={id} name={pair[0].student} slides={pair} onSelect={onSelect} />
       ))}
     </main>
   )

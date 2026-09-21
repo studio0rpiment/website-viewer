@@ -181,3 +181,84 @@ button {
   color: var(--muted);
 }
 .icon-button:hover { color: var(--line); }
+
+/* ---- notice / sign-in / editor ---- */
+.notice {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+input[type="text"], input[type="email"] {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-bottom: 1px dashed var(--muted);
+  padding: 0.35rem 0;
+  width: 100%;
+  min-width: 0;
+  outline: none;
+}
+input[type="text"]:focus, input[type="email"]:focus { border-bottom: 1px solid var(--line); }
+input::placeholder { color: var(--muted); opacity: 0.7; }
+
+.text-button {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  padding: 0.25rem 0.4rem;
+}
+.text-button:hover:not(:disabled) { color: var(--line); }
+.text-button:disabled { opacity: 0.3; cursor: default; }
+.text-button--danger:hover:not(:disabled) { color: #e0604a; }
+
+.signin {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: min(24rem, 100%);
+  padding: 2rem;
+  border: 1px dashed var(--line);
+}
+
+.editor {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+.editor__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.editor__nav { display: flex; gap: 1.25rem; align-items: baseline; }
+.editor__meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1.5rem;
+  align-items: end;
+}
+.field { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+.field--check { flex-direction: row; align-items: center; gap: 0.5rem; padding-bottom: 0.35rem; }
+.field--check input { accent-color: var(--line); }
+
+.editor__entries { display: flex; flex-direction: column; gap: 0.75rem; }
+.entry-row {
+  display: grid;
+  grid-template-columns: 10rem 1fr 1fr auto;
+  gap: 1.5rem;
+  align-items: end;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed var(--muted);
+}
+.entry-row__tools { display: flex; gap: 0.25rem; }
+.editor__error { display: flex; gap: 1rem; align-items: baseline; }
+@media (max-width: 48rem) {
+  .entry-row { grid-template-columns: 1fr; gap: 0.5rem; }
+}

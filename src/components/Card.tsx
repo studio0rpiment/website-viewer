@@ -1,6 +1,6 @@
 import Label from './Label'
 import SiteFrame from './SiteFrame'
-import { VARIANT_LABEL, type Slide } from '../types'
+import type { Slide } from '../types'
 
 interface Props {
   slide: Slide
@@ -14,12 +14,12 @@ export default function Card({ slide, onSelect }: Props) {
       type="button"
       className="card"
       onClick={() => onSelect(slide)}
-      aria-label={`${slide.student} — ${VARIANT_LABEL[slide.variant]}`}
+      aria-label={`${slide.student} — ${slide.label}`}
     >
       <div className="card__frame">
         <SiteFrame url={slide.url} title={slide.id} layoutWidth={1024} />
       </div>
-      <Label className="label--variant">{VARIANT_LABEL[slide.variant]}</Label>
+      <Label className="label--variant">{slide.label}</Label>
     </button>
   )
 }

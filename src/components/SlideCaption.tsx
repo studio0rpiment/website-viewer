@@ -1,5 +1,5 @@
 import Label from './Label'
-import { VARIANT_LABEL, type Slide } from '../types'
+import type { Slide } from '../types'
 
 interface Props {
   slide: Slide
@@ -11,7 +11,7 @@ export default function SlideCaption({ slide, showStudent = true }: Props) {
   return (
     <div className="slide-caption">
       {showStudent && <Label className="label--student">{slide.student}</Label>}
-      <Label className="label--variant">{VARIANT_LABEL[slide.variant]}</Label>
+      <Label className="label--variant">{slide.label}</Label>
       <a
         className="label label--link"
         href={slide.url}

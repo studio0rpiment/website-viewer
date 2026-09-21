@@ -1,32 +1,44 @@
-export type Variant = 'slop' | 'mcp'
+/** Which of the pair a slide is. Labels come from the showcase. */
+export type Variant = 'a' | 'b'
 
-export const VARIANT_LABEL: Record<Variant, string> = {
-  slop: 'slop',
-  mcp: 'mcp+skill',
+export interface Showcase {
+  id: string
+  slug: string
+  title: string
+  label_a: string
+  label_b: string
+  is_default: boolean
 }
 
-/** One row in students.json */
-export interface Student {
+/** One row: a student/group and their two sites. */
+export interface Entry {
+  id: string
+  showcase_id: string
   name: string
-  slop: string
-  mcp: string
+  url_a: string
+  url_b: string
+  sort: number
 }
 
-/** A single site, flattened out of a Student for the carousel */
+/** A single site, flattened out of an Entry for the gallery and carousel. */
 export interface Slide {
   id: string
+  entryId: string
   student: string
   variant: Variant
+  label: string
   url: string
 }
 
-export function toSlides(students: Student[]): Slide[] {
-  return students.flatMap((s) =>
-    (['slop', 'mcp'] as Variant[]).map((variant) => ({
-      id: `${s.name}::${variant}`,
-      student: s.name,
+export function toSlides(showcase: Showcase, entries: Entry[]): Slide[] {
+  return entries.flatMap((e) =>
+    (['a', 'b'] as Variant[]).map((variant) => ({
+      id: `${e.id}::${variant}`,
+      entryId: e.id,
+      student: e.name,
       variant,
-      url: s[variant],
+      label: variant === 'a' ? showcase.label_a : showcase.label_b,
+      url: variant === 'a' ? e.url_a : e.url_b,
     })),
   )
 }
