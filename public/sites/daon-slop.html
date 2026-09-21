@@ -1,0 +1,452 @@
+<!doctype html><html><head><!-- /frame-runtime --><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Green DC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ground:#FDF3E1;
+  --panel:#FFFBF2;
+  --ink:#2C2740;
+  --ink-soft:#5E5873;
+  --line:#EBD9BC;
+  --leaf:#2F7355;
+  --leaf-deep:#1F4F3B;
+  --moss:#A9C98A;
+  --sun:#F4B63F;
+  --blush:#F3B3A3;
+  --sky:#BFE0E6;
+  --water:#8FC7D3;
+  --hill-a:#B9D69A;
+  --hill-b:#8DBF88;
+  --hill-c:#5FA07A;
+  --on-leaf:#FFFBF2;
+  --focus:#2C2740;
+  --font-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --font-body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#1E1B2E;
+    --panel:#28243C;
+    --ink:#FBEFD8;
+    --ink-soft:#C5BCD6;
+    --line:#3D3856;
+    --leaf:#7CC49B;
+    --leaf-deep:#A9E0BF;
+    --moss:#4F7B5C;
+    --sun:#F4B63F;
+    --blush:#E79A88;
+    --sky:#2E4A5A;
+    --water:#3F7C8C;
+    --hill-a:#3E6A55;
+    --hill-b:#2F5A48;
+    --hill-c:#234A3B;
+    --on-leaf:#1E1B2E;
+    --focus:#FBEFD8;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#1E1B2E;
+  --panel:#28243C;
+  --ink:#FBEFD8;
+  --ink-soft:#C5BCD6;
+  --line:#3D3856;
+  --leaf:#7CC49B;
+  --leaf-deep:#A9E0BF;
+  --moss:#4F7B5C;
+  --sun:#F4B63F;
+  --blush:#E79A88;
+  --sky:#2E4A5A;
+  --water:#3F7C8C;
+  --hill-a:#3E6A55;
+  --hill-b:#2F5A48;
+  --hill-c:#234A3B;
+  --on-leaf:#1E1B2E;
+  --focus:#FBEFD8;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ground);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.6;padding-inline:20px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+.wrap{max-width:1080px;margin-inline:auto}
+a{color:var(--leaf-deep)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:var(--font-display);line-height:1.1;text-wrap:balance;margin:0}
+.eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--leaf-deep);margin:0 0 .6rem}
+
+/* nav */
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:18px;flex-wrap:wrap}
+.brand{font-family:var(--font-display);font-weight:800;font-size:1.25rem;display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
+.top nav{display:flex;gap:6px;flex-wrap:wrap}
+.top nav a{text-decoration:none;color:var(--ink);font-weight:500;font-size:.95rem;padding:6px 12px;border-radius:999px}
+.top nav a:hover{background:var(--panel)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:32px;align-items:center;padding-block:24px 48px}
+.hero h1{font-size:clamp(2.4rem,6.4vw,4.6rem);font-weight:800;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--leaf);}
+.hero p.lead{font-size:1.15rem;color:var(--ink-soft);max-width:34rem;margin:1.1rem 0 1.6rem}
+.cta{display:inline-block;background:var(--leaf);color:var(--on-leaf);text-decoration:none;font-weight:700;padding:13px 24px;border-radius:999px}
+.cta:hover{background:var(--leaf-deep)}
+.cta.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);margin-left:8px}
+.cta.ghost:hover{background:var(--panel)}
+.hero-art{width:100%;height:auto;display:block;border-radius:28px 28px 120px 28px}
+.facts{display:flex;gap:28px;flex-wrap:wrap;margin-top:1.8rem}
+.facts div{font-size:.9rem;color:var(--ink-soft)}
+.facts b{display:block;font-family:var(--font-display);font-size:1.7rem;color:var(--ink);line-height:1.1}
+
+/* intro */
+.intro{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;padding-block:56px;border-top:2px dashed var(--line)}
+.intro h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
+.intro p{margin:0 0 1rem;max-width:38rem}
+.intro p:last-child{margin:0}
+
+/* parks */
+.parks{padding-block:56px 40px;border-top:2px dashed var(--line)}
+.parks h2,.mapsec h2,.tips h2{font-size:clamp(1.8rem,3.6vw,2.6rem);margin-bottom:.6rem}
+.sub{color:var(--ink-soft);max-width:38rem;margin:0 0 1.6rem}
+.filters{display:flex;flex-direction:column;gap:12px;margin-bottom:26px}
+.frow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.frow .lbl{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--ink-soft);min-width:64px}
+.chip{font:inherit;font-size:.92rem;font-weight:500;background:var(--panel);color:var(--ink);border:2px solid var(--line);padding:6px 14px;border-radius:999px;cursor:pointer}
+.chip:hover{border-color:var(--leaf)}
+.chip[aria-pressed="true"]{background:var(--leaf);border-color:var(--leaf);color:var(--on-leaf)}
+.count{font-size:.9rem;color:var(--ink-soft);margin:0 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px}
+.card{background:var(--panel);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;border:2px solid var(--line);transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-3px)}
+.card.flash{border-color:var(--sun);box-shadow:0 0 0 4px color-mix(in srgb,var(--sun) 45%,transparent)}
+.card-art{height:112px;position:relative;overflow:hidden}
+.card-art svg{position:absolute;inset:0;width:100%;height:100%}
+.card-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card h3{font-size:1.4rem;font-weight:700}
+.where{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--ink-soft)}
+.card p{margin:0;font-size:.97rem}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+.tag{font-size:.78rem;font-weight:500;background:var(--ground);border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--ink-soft)}
+.meta{font-size:.88rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:10px}
+.meta b{color:var(--ink)}
+.empty{padding:24px;border:2px dashed var(--line);border-radius:18px;color:var(--ink-soft)}
+
+/* map */
+.mapsec{padding-block:56px;border-top:2px dashed var(--line)}
+.mapbox{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:start}
+.mapfig{background:var(--panel);border:2px solid var(--line);border-radius:26px;padding:12px;margin:0}
+.mapfig svg{width:100%;height:auto;display:block}
+.mapfig figcaption{font-size:.82rem;color:var(--ink-soft);padding:8px 10px 4px}
+.pin{cursor:pointer}
+.pin circle{fill:var(--sun);stroke:var(--ink);stroke-width:2.5}
+.pin text{font-family:var(--font-body);font-size:13px;font-weight:700;fill:var(--ink)}
+.pin:hover circle,.pin:focus-visible circle{fill:var(--blush)}
+.pin:focus-visible{outline:none}
+.pin:focus-visible circle{stroke-width:5}
+.areas{display:flex;flex-direction:column;gap:14px}
+.area{background:var(--panel);border:2px solid var(--line);border-radius:20px;padding:16px 18px}
+.area h3{font-size:1.15rem;margin-bottom:4px}
+.area p{margin:0 0 8px;font-size:.93rem;color:var(--ink-soft)}
+.area ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.area button{font:inherit;font-size:.86rem;font-weight:500;background:var(--ground);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:3px 11px;cursor:pointer}
+.area button:hover{border-color:var(--leaf)}
+
+/* tips */
+.tips{padding-block:56px;border-top:2px dashed var(--line)}
+.tipgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;margin-top:22px}
+.tip h3{font-size:1.15rem;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.tip .dot{width:14px;height:14px;border-radius:50%;flex:none}
+.tip p{margin:0;color:var(--ink-soft);font-size:.96rem}
+.seasons{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:34px}
+.season{border-radius:20px;padding:16px 18px;color:#2C2740}
+.season h3{font-size:1.05rem;margin-bottom:4px}
+.season p{margin:0;font-size:.92rem}
+.s1{background:#F6C9C0}.s2{background:#BFE3A9}.s3{background:#F7D078}.s4{background:#BFDDE6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .season{background:var(--panel);border:2px solid var(--line);color:var(--ink)}}
+:root[data-theme="dark"] .season{background:var(--panel);border:2px solid var(--line);color:var(--ink)}
+
+footer{margin-top:40px;padding-block:32px 48px;border-top:2px dashed var(--line);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:.9rem;color:var(--ink-soft)}
+footer .brand{font-size:1.1rem}
+footer p{margin:0;max-width:34rem}
+
+@media (max-width:820px){
+  .hero,.intro,.mapbox{grid-template-columns:1fr}
+  .hero-art{order:-1}
+  .cta.ghost{margin:10px 0 0}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="tree" viewBox="0 0 40 60"><rect x="18" y="38" width="5" height="20" rx="2" fill="#7A5A48"/><circle cx="20" cy="22" r="17" fill="var(--hill-c)"/><circle cx="12" cy="30" r="10" fill="var(--hill-b)"/></symbol>
+    <symbol id="pine" viewBox="0 0 30 60"><rect x="13" y="44" width="4" height="14" fill="#7A5A48"/><path d="M15 2 L27 26 H3Z" fill="var(--hill-c)"/><path d="M15 16 L29 44 H1Z" fill="var(--hill-b)"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#top" aria-label="Green DC home">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="15" fill="var(--sun)"/><path d="M15 6 L22 17 H8Z" fill="var(--leaf)"/><path d="M15 11 L24 24 H6Z" fill="var(--leaf-deep)"/></svg>
+      Green DC
+    </a>
+    <nav aria-label="Sections">
+      <a href="#parks">Parks</a><a href="#map">Map</a><a href="#tips">Visit tips</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">A visitor's guide to Washington, D.C.</p>
+        <h1>Nine city parks worth <em>slowing down</em> for.</h1>
+        <p class="lead">Beyond the monuments, D.C. is stitched together by creek valleys, riverside boardwalks and hilltop lawns. Here are nine everyday green spaces to wander, picnic and people-watch in.</p>
+        <a class="cta" href="#parks">Browse the parks</a><a class="cta ghost" href="#map">See the map</a>
+        <div class="facts">
+          <div><b>9</b>parks in this guide</div>
+          <div><b>3</b>areas to explore</div>
+          <div><b>1,700+</b>acres in Rock Creek Park alone</div>
+        </div>
+      </div>
+      <svg class="hero-art" viewBox="0 0 560 480" role="img" aria-label="Illustration of green hills, trees, a winding path and the Washington Monument under a low sun">
+        <rect width="560" height="480" fill="var(--sky)"/>
+        <circle cx="420" cy="130" r="62" fill="var(--sun)"/>
+        <circle cx="420" cy="130" r="86" fill="var(--sun)" opacity=".25"/>
+        <g fill="var(--panel)" opacity=".9">
+          <ellipse cx="120" cy="90" rx="52" ry="16"/><ellipse cx="160" cy="80" rx="36" ry="14"/>
+          <ellipse cx="300" cy="50" rx="44" ry="13"/><ellipse cx="335" cy="42" rx="26" ry="10"/>
+        </g>
+        <path d="M262 300 L270 130 L278 300Z" fill="var(--panel)" stroke="var(--line)" stroke-width="2"/>
+        <path d="M270 112 L278 132 H262Z" fill="var(--blush)"/>
+        <path d="M0 300 Q140 220 280 285 T560 260 V480 H0Z" fill="var(--hill-a)"/>
+        <path d="M0 360 Q160 290 320 350 T560 330 V480 H0Z" fill="var(--hill-b)"/>
+        <path d="M0 420 Q200 360 380 410 T560 400 V480 H0Z" fill="var(--hill-c)"/>
+        <path d="M250 480 C 270 440, 200 420, 260 390 S 330 370, 300 340" fill="none" stroke="var(--panel)" stroke-width="16" stroke-linecap="round" opacity=".9"/>
+        <use href="#tree" x="40" y="255" width="80" height="120"/>
+        <use href="#pine" x="120" y="290" width="46" height="92"/>
+        <use href="#tree" x="420" y="270" width="90" height="135"/>
+        <use href="#pine" x="500" y="300" width="40" height="80"/>
+        <use href="#tree" x="380" y="350" width="60" height="90"/>
+        <g>
+          <circle cx="205" cy="405" r="9" fill="var(--blush)"/><rect x="199" y="413" width="12" height="18" rx="4" fill="var(--sun)"/>
+          <circle cx="228" cy="410" r="7" fill="var(--sun)"/><rect x="223" y="416" width="10" height="15" rx="4" fill="var(--panel)"/>
+        </g>
+      </svg>
+    </section>
+
+    <section class="intro" aria-labelledby="intro-h">
+      <div>
+        <p class="eyebrow">Before you go</p>
+        <h2 id="intro-h">A city built around open space.</h2>
+      </div>
+      <div>
+        <p>Washington was laid out with circles, squares and reservations from the start, and that legacy is still easy to feel. Many of the parks below are managed by the National Park Service, while others belong to the D.C. Department of Parks and Recreation.</p>
+        <p>You do not need a plan to enjoy them. Pick a neighborhood, take Metro or a bike, and stay a while. This guide groups the parks by area and by what you feel like doing, so you can find the right one in a minute.</p>
+      </div>
+    </section>
+
+    <section class="parks" id="parks" aria-labelledby="parks-h">
+      <p class="eyebrow">The parks</p>
+      <h2 id="parks-h">Pick a place, pick a mood.</h2>
+      <p class="sub">Filter by area or by activity. Each card notes what the park is known for and one thing worth doing there.</p>
+      <div class="filters">
+        <div class="frow" id="areaRow"><span class="lbl">Area</span></div>
+        <div class="frow" id="themeRow"><span class="lbl">Do</span></div>
+      </div>
+      <p class="count" id="count" aria-live="polite"></p>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section class="mapsec" id="map" aria-labelledby="map-h">
+      <p class="eyebrow">Explore by area</p>
+      <h2 id="map-h">Where everything sits.</h2>
+      <p class="sub">A simple sketch of the city. Select a marker to jump to that park.</p>
+      <div class="mapbox">
+        <figure class="mapfig">
+          <svg viewBox="0 0 520 480" role="group" aria-label="Sketch map of Washington, D.C. showing the nine parks">
+            <rect width="520" height="480" rx="18" fill="var(--ground)"/>
+            <!-- city diamond -->
+            <path d="M260 30 L490 250 L280 452 L60 262Z" fill="var(--hill-a)" stroke="var(--leaf)" stroke-width="3" stroke-linejoin="round"/>
+            <!-- Potomac -->
+            <path d="M40 232 C 90 270, 120 300, 190 330 C 240 352, 270 380, 300 470 L 20 470 L 20 232Z" fill="var(--water)"/>
+            <text x="46" y="410" font-size="14" font-family="DM Sans, sans-serif" font-weight="700" fill="var(--ink)" transform="rotate(-8 46 410)">Potomac River</text>
+            <!-- Anacostia -->
+            <path d="M430 150 C 400 210, 380 260, 350 310 C 335 340, 320 400, 300 470 L 350 470 C 370 410, 395 350, 420 300 C 450 250, 470 200, 470 165Z" fill="var(--water)"/>
+            <text x="420" y="410" font-size="14" font-family="DM Sans, sans-serif" font-weight="700" fill="var(--ink)">Anacostia</text>
+            <text x="420" y="428" font-size="14" font-family="DM Sans, sans-serif" font-weight="700" fill="var(--ink)">River</text>
+            <!-- Rock Creek -->
+            <path d="M232 52 C 226 100, 250 130, 236 170 C 226 210, 246 240, 232 290" fill="none" stroke="var(--leaf)" stroke-width="10" stroke-linecap="round" opacity=".55"/>
+            <text x="120" y="120" font-size="12" font-family="DM Sans, sans-serif" font-weight="700" fill="var(--ink-soft)" letter-spacing="1.5">NORTHWEST</text>
+            <text x="390" y="112" font-size="12" font-family="DM Sans, sans-serif" font-weight="700" fill="var(--ink-soft)" letter-spacing="1.5" text-anchor="end" opacity="0"> </text>
+            <!-- National Mall strip -->
+            <rect x="200" y="315" width="120" height="14" rx="7" fill="var(--panel)" opacity=".8" transform="rotate(-6 260 322)"/>
+            <text x="262" y="352" font-size="11" font-family="DM Sans, sans-serif" fill="var(--ink-soft)" text-anchor="middle" transform="rotate(-6 262 350)">National Mall</text>
+            <!-- pins -->
+            <g id="pins"></g>
+          </svg>
+          <figcaption>Not to scale. Positions are approximate and meant only to show how the parks sit relative to the rivers.</figcaption>
+        </figure>
+        <div class="areas" id="areas"></div>
+      </div>
+    </section>
+
+    <section class="tips" id="tips" aria-labelledby="tips-h">
+      <p class="eyebrow">Visit tips</p>
+      <h2 id="tips-h">Make the most of the day.</h2>
+      <div class="tipgrid">
+        <div class="tip"><h3><span class="dot" style="background:var(--leaf)"></span>Getting around</h3><p>Metrorail and Metrobus reach most of these parks, and Capital Bikeshare docks are common near the busier ones. Trail-heavy parks like Rock Creek and Anacostia Park are especially pleasant by bike.</p></div>
+        <div class="tip"><h3><span class="dot" style="background:var(--sun)"></span>Pack light</h3><p>Bring water, sun protection and a blanket. Some parks have few food options nearby, so a small picnic goes a long way.</p></div>
+        <div class="tip"><h3><span class="dot" style="background:var(--blush)"></span>Timing</h3><p>Weekday mornings are the calmest. Weekend afternoons, especially in warm months, bring markets, music and crowds.</p></div>
+        <div class="tip"><h3><span class="dot" style="background:var(--water)"></span>Check first</h3><p>Hours, events and trail conditions change. Look up the National Park Service or D.C. Parks and Recreation page for a park before you head out.</p></div>
+      </div>
+      <div class="seasons" aria-label="What to expect by season">
+        <div class="season s1"><h3>Spring</h3><p>Blossoms and fresh green along the Potomac and in the neighborhood parks.</p></div>
+        <div class="season s3"><h3>Summer</h3><p>Water lilies and lotus at Kenilworth, evening picnics and outdoor events.</p></div>
+        <div class="season s2"><h3>Fall</h3><p>Golden leaves along the Rock Creek trails and cooler, quieter walks.</p></div>
+        <div class="season s4"><h3>Winter</h3><p>Bare-branch views, few crowds and skating in the right conditions.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand" href="#top"><svg width="24" height="24" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="15" fill="var(--sun)"/><path d="M15 6 L22 17 H8Z" fill="var(--leaf)"/><path d="M15 11 L24 24 H6Z" fill="var(--leaf-deep)"/></svg>Green DC</a>
+    <p>An independent, unofficial guide to Washington, D.C. city parks. It is not affiliated with the National Park Service or the D.C. government, and details may change, so confirm hours and conditions with the official park pages.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var PARKS=[
+    {id:"rock-creek",name:"Rock Creek Park",area:"nw",mgr:"National Park Service",art:"forest",x:236,y:150,
+     blurb:"A long, wooded valley that runs through the northwest of the city, with more than 1,700 acres of trails, creek crossings and quiet picnic groves.",
+     doit:"Walk or bike the creekside trails, then stop at Peirce Mill.",tags:["walk","picnic","water"]},
+    {id:"meridian-hill",name:"Meridian Hill Park",area:"nw",mgr:"National Park Service",art:"terrace",x:288,y:214,
+     blurb:"A formal, terraced park with a cascading fountain, stone walls and wide lawns, set on a hill above the surrounding neighborhoods.",
+     doit:"Climb the terraces for the view, then sit by the cascade.",tags:["views","picnic","events"]},
+    {id:"dupont",name:"Dupont Circle",area:"nw",mgr:"National Park Service",art:"fountain",x:274,y:256,
+     blurb:"A busy circle around a marble fountain, ringed by benches, chess tables and some of the best people-watching in town.",
+     doit:"Grab a coffee and watch a chess game. On Sundays, browse the farmers market nearby.",tags:["events","picnic"]},
+    {id:"fort-reno",name:"Fort Reno Park",area:"nw",mgr:"D.C. Parks and Recreation",art:"hill",x:170,y:196,
+     blurb:"A grassy hilltop in Tenleytown that is the highest natural point in the District, with open sky and a local, neighborhood feel.",
+     doit:"Bring a blanket for sunset and look out over the city.",tags:["views","kids","events"]},
+    {id:"kenilworth",name:"Kenilworth Park and Aquatic Gardens",area:"ana",mgr:"National Park Service",art:"water",x:404,y:200,
+     blurb:"Ponds full of water lilies and lotus beside the Anacostia River, plus marsh boardwalks where herons and turtles are easy to spot.",
+     doit:"Visit in summer when the lilies and lotus are in bloom.",tags:["water","walk"]},
+    {id:"kingman",name:"Kingman and Heritage Islands",area:"ana",mgr:"D.C. Parks and Recreation",art:"water",x:372,y:280,
+     blurb:"Two small islands in the Anacostia reached by footbridge, with wetland trails, wildlife and a peaceful, out-of-the-city feel.",
+     doit:"Take an easy loop walk and look for birds along the water.",tags:["water","walk","kids"]},
+    {id:"yards",name:"Yards Park",area:"ana",mgr:"Capitol Riverfront",art:"boardwalk",x:328,y:342,
+     blurb:"A modern riverfront park with a boardwalk, a curved pedestrian bridge and a shallow canal that kids love on warm days.",
+     doit:"Stroll the boardwalk at golden hour, then explore the waterfront nearby.",tags:["water","kids","events"]},
+    {id:"anacostia",name:"Anacostia Park",area:"ana",mgr:"National Park Service",art:"boardwalk",x:396,y:326,
+     blurb:"A long ribbon of parkland along the river's edge, with open fields, riverside paths and a skating pavilion.",
+     doit:"Rent a bike or bring skates and follow the river path.",tags:["walk","water","kids"]},
+    {id:"east-potomac",name:"East Potomac Park",area:"sw",mgr:"National Park Service",art:"forest",x:216,y:376,
+     blurb:"A flat peninsula between the Potomac and the Washington Channel, lined with trees and ringed by a loop road that is popular with cyclists and walkers.",
+     doit:"Ride or walk the full loop out to the tip for open water views.",tags:["views","walk","water"]}
+  ];
+  var AREAS=[
+    {id:"nw",name:"Northwest",desc:"Hills, creek valleys and neighborhood favorites. The greenest corner of the city."},
+    {id:"ana",name:"Along the Anacostia",desc:"Wetlands, boardwalks and open riverside fields on the east side of the city."},
+    {id:"sw",name:"Southwest and the Potomac",desc:"Big-sky waterfront on the western edge, close to the National Mall."}
+  ];
+  var THEMES=[
+    {id:"all",name:"All"},{id:"walk",name:"Walks and trails"},{id:"picnic",name:"Picnics"},
+    {id:"views",name:"Views"},{id:"water",name:"Water and wildlife"},{id:"events",name:"Events and culture"},{id:"kids",name:"Kid-friendly"}
+  ];
+  var TAGNAME={};THEMES.forEach(function(t){TAGNAME[t.id]=t.name});
+  var AREANAME={nw:"Northwest",ana:"Anacostia River",sw:"Southwest"};
+  var state={area:"all",theme:"all"};
+
+  function el(tag,attrs,html){var e=document.createElement(tag);if(attrs)for(var k in attrs)e.setAttribute(k,attrs[k]);if(html!=null)e.innerHTML=html;return e}
+
+  function art(kind,i){
+    var bgs=["var(--sky)","#F6D9B8","#D9E8B8"];
+    var bg=kind==="water"||kind==="boardwalk"?"var(--sky)":kind==="terrace"||kind==="fountain"?"#F6D9B8":"var(--sky)";
+    if(document.documentElement&&(kind==="terrace"||kind==="fountain")){bg="color-mix(in srgb, var(--blush) 55%, var(--panel))"}
+    var s='<svg viewBox="0 0 300 112" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="300" height="112" fill="'+bg+'"/>';
+    s+='<circle cx="'+(230-i*6)+'" cy="34" r="20" fill="var(--sun)"/>';
+    if(kind==="forest"){
+      s+='<path d="M0 80 Q90 50 180 78 T300 66 V112 H0Z" fill="var(--hill-a)"/><path d="M0 96 Q120 70 300 94 V112 H0Z" fill="var(--hill-b)"/>';
+      s+='<use href="#pine" x="30" y="30" width="34" height="68"/><use href="#tree" x="80" y="38" width="44" height="66"/><use href="#pine" x="200" y="34" width="32" height="64"/><use href="#tree" x="240" y="42" width="40" height="60"/>';
+    }else if(kind==="hill"){
+      s+='<path d="M0 100 Q150 10 300 100V112H0Z" fill="var(--hill-a)"/><path d="M0 108 Q150 60 300 108V112H0Z" fill="var(--hill-b)"/><use href="#tree" x="140" y="18" width="36" height="54"/>';
+    }else if(kind==="terrace"){
+      s+='<rect y="60" width="300" height="52" fill="var(--hill-a)"/><rect x="40" y="52" width="220" height="10" rx="3" fill="var(--panel)"/><rect x="60" y="68" width="180" height="10" rx="3" fill="var(--panel)"/><rect x="80" y="84" width="140" height="10" rx="3" fill="var(--panel)"/><path d="M130 62 V96 M150 62 V96 M170 62 V96" stroke="var(--water)" stroke-width="6" stroke-linecap="round"/>';
+    }else if(kind==="fountain"){
+      s+='<rect y="82" width="300" height="30" fill="var(--hill-a)"/><ellipse cx="150" cy="88" rx="62" ry="12" fill="var(--panel)"/><ellipse cx="150" cy="86" rx="50" ry="8" fill="var(--water)"/><path d="M150 84 V40 M150 50 Q130 40 122 62 M150 50 Q170 40 178 62" stroke="var(--water)" stroke-width="5" fill="none" stroke-linecap="round"/><use href="#tree" x="30" y="34" width="40" height="60"/><use href="#tree" x="240" y="38" width="38" height="58"/>';
+    }else if(kind==="boardwalk"){
+      s+='<rect y="70" width="300" height="42" fill="var(--water)"/><rect y="62" width="300" height="12" fill="#B98F6A"/><path d="M0 68 H300" stroke="#8C6A4C" stroke-width="2"/><path d="M40 62 V40 M90 62 V40 M140 62 V40 M190 62 V40 M240 62 V40" stroke="#8C6A4C" stroke-width="3"/><path d="M30 40 H250" stroke="#8C6A4C" stroke-width="3"/>';
+    }else{ /* water */
+      s+='<rect y="66" width="300" height="46" fill="var(--water)"/><path d="M0 66 Q150 46 300 66V72H0Z" fill="var(--hill-a)"/>';
+      s+='<ellipse cx="80" cy="88" rx="22" ry="7" fill="var(--hill-b)"/><ellipse cx="150" cy="96" rx="26" ry="8" fill="var(--hill-b)"/><ellipse cx="220" cy="86" rx="20" ry="6" fill="var(--hill-b)"/>';
+      s+='<circle cx="150" cy="93" r="6" fill="var(--blush)"/><circle cx="82" cy="85" r="5" fill="var(--blush)"/><circle cx="222" cy="84" r="5" fill="var(--sun)"/>';
+    }
+    return s+'</svg>';
+  }
+
+  function renderChips(){
+    var ar=document.getElementById("areaRow"),tr=document.getElementById("themeRow");
+    [{id:"all",name:"All areas"}].concat(AREAS).forEach(function(a){
+      var b=el("button",{type:"button","class":"chip","data-area":a.id,"aria-pressed":String(state.area===a.id),id:"area-"+a.id},a.name);
+      b.addEventListener("click",function(){state.area=a.id;update()});ar.appendChild(b);
+    });
+    THEMES.forEach(function(t){
+      var b=el("button",{type:"button","class":"chip","data-theme-id":t.id,"aria-pressed":String(state.theme===t.id),id:"theme-"+t.id},t.name);
+      b.addEventListener("click",function(){state.theme=t.id;update()});tr.appendChild(b);
+    });
+  }
+
+  function renderCards(){
+    var grid=document.getElementById("grid");grid.innerHTML="";
+    var list=PARKS.filter(function(p){return (state.area==="all"||p.area===state.area)&&(state.theme==="all"||p.tags.indexOf(state.theme)>-1)});
+    document.getElementById("count").textContent="Showing "+list.length+" of "+PARKS.length+" parks";
+    if(!list.length){grid.appendChild(el("div",{"class":"empty"},"No parks match both filters. Try a different area or activity."));return}
+    list.forEach(function(p,i){
+      var c=el("article",{"class":"card",id:"card-"+p.id});
+      c.innerHTML='<div class="card-art">'+art(p.art,i)+'</div><div class="card-body"><span class="where">'+AREANAME[p.area]+'</span><h3>'+p.name+'</h3><p>'+p.blurb+'</p><div class="meta"><b>Try:</b> '+p.doit+'</div><div class="meta">Managed by '+p.mgr+'</div><div class="tags">'+p.tags.map(function(t){return '<span class="tag">'+TAGNAME[t]+'</span>'}).join("")+'</div></div>';
+      grid.appendChild(c);
+    });
+  }
+
+  function renderMap(){
+    var g=document.getElementById("pins");g.innerHTML="";
+    PARKS.forEach(function(p,i){
+      var gEl=document.createElementNS("http://www.w3.org/2000/svg","g");
+      gEl.setAttribute("class","pin");gEl.setAttribute("tabindex","0");gEl.setAttribute("role","link");gEl.setAttribute("aria-label",p.name);
+      var short=p.name.replace(" Park and Aquatic Gardens"," Gardens").replace(" and Heritage Islands"," Island").replace(" Park","");
+      var right=p.x<300;
+      gEl.innerHTML='<circle cx="'+p.x+'" cy="'+p.y+'" r="9"/><text x="'+(right?p.x-14:p.x+14)+'" y="'+(p.y+5)+'" text-anchor="'+(right?"end":"start")+'">'+short+'</text>';
+      gEl.addEventListener("click",function(){goTo(p.id)});
+      gEl.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();goTo(p.id)}});
+      g.appendChild(gEl);
+    });
+    var box=document.getElementById("areas");box.innerHTML="";
+    AREAS.forEach(function(a){
+      var d=el("div",{"class":"area"},'<h3>'+a.name+'</h3><p>'+a.desc+'</p>');
+      var ul=el("ul");
+      PARKS.filter(function(p){return p.area===a.id}).forEach(function(p){
+        var li=el("li");var b=el("button",{type:"button"},p.name);b.addEventListener("click",function(){goTo(p.id)});li.appendChild(b);ul.appendChild(li);
+      });
+      d.appendChild(ul);box.appendChild(d);
+    });
+  }
+
+  function goTo(id){
+    var p=PARKS.filter(function(x){return x.id===id})[0];
+    var visible=document.getElementById("card-"+id);
+    if(!visible){state.area="all";state.theme="all";update();visible=document.getElementById("card-"+id)}
+    if(!visible)return;
+    visible.scrollIntoView({behavior:"smooth",block:"center"});
+    visible.classList.add("flash");
+    setTimeout(function(){visible.classList.remove("flash")},1800);
+  }
+
+  function update(){
+    document.querySelectorAll("[data-area]").forEach(function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-area")===state.area))});
+    document.querySelectorAll("[data-theme-id]").forEach(function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-theme-id")===state.theme))});
+    renderCards();
+  }
+
+  renderChips();renderCards();renderMap();
+})();
+</script>
+
+</body></html>
