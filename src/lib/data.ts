@@ -18,6 +18,8 @@ function fromJson(): Loaded {
     label_a: 'slop',
     label_b: 'mcp+skill',
     is_default: true,
+    due_date: '2026-09-22',
+    term: 'F26',
   }
   const entries: Entry[] = (students as { name: string; slop: string; mcp: string }[]).map((s, i) => ({
     id: `local-${i}`,
@@ -70,7 +72,7 @@ export async function saveShowcase(patch: Partial<Showcase> & { id: string }) {
   if (error) throw error
 }
 
-export async function createShowcase(input: Pick<Showcase, 'slug' | 'title' | 'label_a' | 'label_b'>) {
+export async function createShowcase(input: Pick<Showcase, 'slug' | 'title' | 'label_a' | 'label_b' | 'due_date' | 'term'>) {
   const { data, error } = await db().from('showcases').insert(input).select().single()
   if (error) throw error
   return data as Showcase

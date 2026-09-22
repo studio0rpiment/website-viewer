@@ -105,6 +105,15 @@ export default function EditPage({ slug, navigate }: Props) {
         <Field label="slug" value={showcase.slug} onCommit={(slug) => changeShowcase({ slug: slugify(slug) })} />
         <Field label="label a" value={showcase.label_a} onCommit={(label_a) => changeShowcase({ label_a })} />
         <Field label="label b" value={showcase.label_b} onCommit={(label_b) => changeShowcase({ label_b })} />
+        <label className="field">
+          <span className="label label--muted">due date</span>
+          <input
+            type="date"
+            value={showcase.due_date ?? ''}
+            onChange={(e) => changeShowcase({ due_date: e.target.value || null })}
+          />
+        </label>
+        <Field label="term" value={showcase.term} onCommit={(term) => changeShowcase({ term })} />
         <label className="field field--check">
           <input
             type="checkbox"

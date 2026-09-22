@@ -5,7 +5,7 @@ import ThemeToggle from '../components/ThemeToggle'
 import Toolbar from '../components/Toolbar'
 import Label from '../components/Label'
 import { useShowcase } from '../hooks/useShowcase'
-import { toSlides, type Slide } from '../types'
+import { formatDue, toSlides, type Slide } from '../types'
 import type { ThemeMode } from '../themes'
 
 interface Props {
@@ -33,8 +33,11 @@ export default function GalleryPage({ slug, themeMode, onToggleTheme }: Props) {
   if (state.status === 'missing') return <Notice>no showcase at /{slug}</Notice>
   if (state.status === 'error') return <Notice>{state.message}</Notice>
 
+  const due = formatDue(state.data.showcase)
+
   return (
     <>
+      {open === null && due && <Label className="corner-note">{due}</Label>}
       {open === null && (
         <Toolbar>
           <ThemeToggle mode={themeMode} onToggle={onToggleTheme} />

@@ -10,8 +10,13 @@ create table if not exists showcases (
   label_a     text not null default 'a',      -- caption under the first site of each pair
   label_b     text not null default 'b',      -- caption under the second
   is_default  boolean not null default false, -- shown at /
+  due_date    date,                             -- assignment due date (optional)
+  term        text not null default '',         -- e.g. F26
   created_at  timestamptz not null default now()
 );
+-- Additive migrations for databases created before these columns existed.
+alter table showcases add column if not exists due_date date;
+alter table showcases add column if not exists term text not null default '';
 
 create table if not exists entries (
   id           uuid primary key default gen_random_uuid(),
@@ -73,8 +78,8 @@ create policy "admins read admins" on admins for select using (is_admin());
 insert into admins (email) values ('el.kevo@gmail.com'), ('kevin@orpiment.studio')
   on conflict do nothing;
 
-insert into showcases (slug, title, label_a, label_b, is_default)
-  values ('slop-vs-mcp', 'Slop vs. MCP + Skill', 'slop', 'mcp+skill', true)
+insert into showcases (slug, title, label_a, label_b, is_default, due_date, term)
+  values ('slop-vs-mcp', 'Slop vs. MCP + Skill', 'slop', 'mcp+skill', true, '2026-09-22', 'F26')
   on conflict (slug) do nothing;
 
 insert into entries (showcase_id, name, url_a, url_b, sort)

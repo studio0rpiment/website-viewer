@@ -8,6 +8,18 @@ export interface Showcase {
   label_a: string
   label_b: string
   is_default: boolean
+  /** ISO date (YYYY-MM-DD) or null. */
+  due_date: string | null
+  /** Term label shown after the date, e.g. "F26". */
+  term: string
+}
+
+/** "22 september F26" — day, lowercase month, term. Empty when there's no date. */
+export function formatDue(s: Pick<Showcase, 'due_date' | 'term'>): string {
+  if (!s.due_date) return s.term
+  const [y, m, d] = s.due_date.split('-').map(Number)
+  const month = new Date(y, m - 1, d).toLocaleString('en-US', { month: 'long' }).toLowerCase()
+  return `${d} ${month} ${s.term}`.trim()
 }
 
 /** One row: a student/group and their two sites. */
