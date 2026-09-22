@@ -170,6 +170,9 @@ button {
   left: 1rem;
   z-index: 20;
   opacity: 0.5;
+  height: 2rem;            /* same box as .icon-button so the two sit on one line */
+  display: flex;
+  align-items: center;
 }
 
 /* ---- toolbar + controls ---- */
