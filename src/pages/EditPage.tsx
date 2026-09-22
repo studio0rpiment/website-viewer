@@ -25,9 +25,13 @@ export default function EditPage({ slug, navigate }: Props) {
   const { state, patch } = useShowcase(slug)
   const [others, setOthers] = useState<Showcase[]>([])
   const [error, setError] = useState<string | null>(null)
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
 
   useEffect(() => {
-    if (session) listShowcases().then(setOthers).catch(() => {})
+    if (!session || !supabase) return
+    listShowcases().then(setOthers).catch(() => {})
+    // Ask the database whether this session may write — the same check RLS uses.
+    supabase.rpc('is_admin').then(({ data }) => setIsAdmin(data === true))
   }, [session])
 
   if (!supabase) return <Notice>no database configured — add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY</Notice>
@@ -89,7 +93,9 @@ export default function EditPage({ slug, navigate }: Props) {
               </a>
             ))}
           <a className="label label--link" href="/new" onClick={(e) => { e.preventDefault(); navigate('/new') }}>+ new showcase</a>
-          <Label className="label--muted">{session.user.email}</Label>
+          <Label className="label--muted">
+            {session.user.email}{isAdmin === false && ' — not an admin'}
+          </Label>
           <button type="button" className="label label--link text-button" onClick={signOut}>sign out</button>
         </nav>
       </header>

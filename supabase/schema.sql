@@ -40,12 +40,18 @@ alter table showcases enable row level security;
 alter table entries   enable row level security;
 alter table admins    enable row level security;
 
+-- Looks the signed-in user up by id and matches their account email against
+-- admins, so it doesn't depend on an email claim being present in the JWT.
 create or replace function is_admin() returns boolean
 language sql stable security definer set search_path = public as $$
   select exists (
-    select 1 from admins where email = lower(auth.jwt() ->> 'email')
+    select 1
+    from auth.users u
+    join admins a on a.email = lower(u.email)
+    where u.id = auth.uid()
   );
 $$;
+grant execute on function is_admin() to anon, authenticated;
 
 drop policy if exists "public read showcases" on showcases;
 create policy "public read showcases" on showcases for select using (true);
@@ -64,7 +70,7 @@ create policy "admins read admins" on admins for select using (is_admin());
 
 -- ---------- seed ----------
 
-insert into admins (email) values ('el.kevo@gmail.com')
+insert into admins (email) values ('el.kevo@gmail.com'), ('kevin@orpiment.studio')
   on conflict do nothing;
 
 insert into showcases (slug, title, label_a, label_b, is_default)
