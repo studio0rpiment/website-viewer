@@ -2,50 +2,43 @@ import { useState, type FormEvent } from 'react'
 import Label from './Label'
 import { supabase } from '../lib/supabase'
 
-/** Magic-link sign in. Supabase emails a link; clicking it returns here signed in. */
+/** The one account allowed to sign in. Password is set in Supabase → Authentication → Users. */
+const ADMIN_EMAIL = 'kevin@orpiment.studio'
+
+/** Password-only sign in for the single admin. No email round trip. */
 export default function SignIn() {
-  const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [password, setPassword] = useState('')
+  const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState('')
 
   const submit = async (e: FormEvent) => {
     e.preventDefault()
     if (!supabase) return
-    setStatus('sending')
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: location.href },
-    })
-    if (error) {
-      setStatus('error')
-      setMessage(error.message)
-    } else {
-      setStatus('sent')
-    }
+    setBusy(true)
+    const { error } = await supabase.auth.signInWithPassword({ email: ADMIN_EMAIL, password })
+    setBusy(false)
+    if (error) setMessage(error.message)
+    // on success the auth state event re-renders the page
   }
 
   return (
     <main className="notice">
       <form className="signin" onSubmit={submit}>
         <Label className="label--student">sign in</Label>
-        {status === 'sent' ? (
-          <Label className="label--muted">check {email} for a link</Label>
-        ) : (
-          <>
-            <input
-              type="email"
-              value={email}
-              placeholder="email"
-              autoFocus
-              required
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <button type="submit" className="text-button" disabled={status === 'sending'}>
-              send link
-            </button>
-            {status === 'error' && <Label className="label--muted">{message}</Label>}
-          </>
-        )}
+        <Label className="label--muted">{ADMIN_EMAIL}</Label>
+        <input
+          type="password"
+          value={password}
+          placeholder="password"
+          autoFocus
+          required
+          autoComplete="current-password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit" className="text-button" disabled={busy}>
+          sign in
+        </button>
+        {message && <Label className="label--muted">{message}</Label>}
       </form>
     </main>
   )

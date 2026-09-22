@@ -31,7 +31,7 @@ The anon key is safe in the browser — Row Level Security is what protects writ
 
 ## Editing
 
-Open `/<slug>/edit`, enter your email, click the link Supabase sends. Every field saves when you leave it (blur) or press Enter; Escape reverts. Rows have ↑ ↓ to reorder and × to remove; **+ add** appends a blank row. The header lists other showcases and **+ new showcase**. Only emails in the `admins` table can write — add a row there to let a TA in.
+Open `/<slug>/edit` and enter the password. The account is fixed to `ADMIN_EMAIL` in `src/components/SignIn.tsx`; its password is set in Supabase → Authentication → Users (no emails involved). Every field saves when you leave it (blur) or press Enter; Escape reverts. Rows have ↑ ↓ to reorder and × to remove; **+ add** appends a blank row. The header lists other showcases and **+ new showcase**. Only emails in the `admins` table can write — add a row there to let a TA in.
 
 ## Reusing for another assignment
 
