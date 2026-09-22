@@ -89,6 +89,7 @@ export default function EditPage({ slug, navigate }: Props) {
               </a>
             ))}
           <a className="label label--link" href="/new" onClick={(e) => { e.preventDefault(); navigate('/new') }}>+ new showcase</a>
+          <Label className="label--muted">{session.user.email}</Label>
           <button type="button" className="label label--link text-button" onClick={signOut}>sign out</button>
         </nav>
       </header>
