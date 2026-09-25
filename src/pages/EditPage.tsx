@@ -4,6 +4,7 @@ import EntryRow from '../components/EntryRow'
 import Label from '../components/Label'
 import SignIn from '../components/SignIn'
 import SlotsPicker from '../components/SlotsPicker'
+import BulkImport from '../components/BulkImport'
 import { useSession } from '../hooks/useSession'
 import { useShowcase } from '../hooks/useShowcase'
 import { addEntry, listShowcases, removeEntry, reorderEntries, saveEntry, saveShowcase } from '../lib/data'
@@ -138,7 +139,15 @@ export default function EditPage({ slug, navigate }: Props) {
             onError={setError}
           />
         ))}
-        <button type="button" className="text-button" onClick={add}>+ add</button>
+        <div className="editor__actions">
+          <button type="button" className="text-button" onClick={add}>+ add</button>
+          <BulkImport
+            showcase={showcase}
+            count={entries.length}
+            onAdded={(rows) => patch((d) => ({ ...d, entries: [...d.entries, ...rows] }))}
+            onError={setError}
+          />
+        </div>
       </section>
 
       {error && (

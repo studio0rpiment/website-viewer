@@ -330,6 +330,7 @@ input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.5; cursor: po
 .url-slot { display: flex; align-items: end; gap: 0.5rem; min-width: 0; }
 .url-slot .field { flex: 1; }
 .editor__error { display: flex; gap: 1rem; align-items: baseline; }
+.editor__actions { display: flex; gap: 1rem; align-items: baseline; }
 @media (max-width: 48rem) {
   .entry-row { grid-template-columns: 1fr; gap: 0.5rem; }
 }
