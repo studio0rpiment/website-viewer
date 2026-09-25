@@ -61,8 +61,9 @@ export async function listShowcases(): Promise<Showcase[]> {
   const { data, error } = await supabase
     .from('showcases')
     .select('*')
-    .order('due_date', { ascending: false, nullsFirst: false })
-    .order('created_at', { ascending: false })
+    // Chronological by due date — the front page reads as the course's progression.
+    .order('due_date', { ascending: true, nullsFirst: false })
+    .order('created_at', { ascending: true })
   if (error) throw error
   return (data ?? []) as Showcase[]
 }

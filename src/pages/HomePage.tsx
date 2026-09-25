@@ -13,7 +13,7 @@ interface Props {
   onToggleTheme: () => void
 }
 
-/** Front page: course title and the list of showcases, newest due date first. */
+/** Front page: course title and the showcases in due-date order (earliest first) — the semester's progression. */
 export default function HomePage({ navigate, themeMode, onToggleTheme }: Props) {
   const [showcases, setShowcases] = useState<Showcase[] | null>(null)
   const [error, setError] = useState<string | null>(null)

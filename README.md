@@ -22,7 +22,7 @@ The anon key is safe in the browser — Row Level Security is what protects writ
 
 | path            | what                                                    |
 | --------------- | ------------------------------------------------------- |
-| `/`             | front page: course title (`src/site.ts`) + list of showcases, newest due date first |
+| `/`             | front page: course title (`src/site.ts`) + showcases in due-date order, earliest first |
 | `/:slug`        | a specific showcase                                     |
 | `/edit`         | admin index — **not linked from anywhere**; sign in required |
 | `/edit/new`     | create a showcase                                       |
