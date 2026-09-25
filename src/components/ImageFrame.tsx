@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface Props {
   url: string
@@ -15,7 +15,19 @@ interface Props {
  * before reporting naturalWidth/Height.
  */
 export default function ImageFrame({ url, alt, interactive = false }: Props) {
+  const img = useRef<HTMLImageElement>(null)
   const [landscape, setLandscape] = useState<boolean | null>(null)
+
+  const measure = (el: HTMLImageElement) => {
+    if (el.naturalWidth) setLandscape(el.naturalWidth >= el.naturalHeight)
+  }
+
+  // A cached image can be complete before React attaches onLoad, so the load
+  // event never reaches us — measure on mount too, and again if the URL changes.
+  useEffect(() => {
+    setLandscape(null)
+    if (img.current?.complete) measure(img.current)
+  }, [url])
 
   if (interactive) {
     return (
@@ -26,12 +38,13 @@ export default function ImageFrame({ url, alt, interactive = false }: Props) {
   }
   return (
     <img
+      ref={img}
       src={url}
       alt={alt}
       loading="lazy"
-      onLoad={(e) => setLandscape(e.currentTarget.naturalWidth >= e.currentTarget.naturalHeight)}
+      onLoad={(e) => measure(e.currentTarget)}
       className={`image-frame image-frame--natural ${
-        landscape === null ? '' : landscape ? 'is-landscape' : 'is-portrait'
+        landscape === null ? 'is-unmeasured' : landscape ? 'is-landscape' : 'is-portrait'
       }`.trim()}
     />
   )

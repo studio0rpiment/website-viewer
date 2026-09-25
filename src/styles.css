@@ -110,7 +110,9 @@ button {
   left: 0;
   border: 1px dashed var(--line);
   box-sizing: border-box;
-  width: 100%;          /* until measured: assume landscape */
+  max-width: 100%;      /* until measured: fit the cell either way */
+  max-height: 100%;
+  width: auto;
   height: auto;
 }
 .image-frame--natural.is-landscape { width: 100%; height: auto; }
