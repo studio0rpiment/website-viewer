@@ -40,7 +40,7 @@ Open `/edit` and enter the password, then pick a showcase. The account is fixed 
 
 ### Images instead of sites
 
-Any entry URL that ends in `.png`, `.jpg`, `.gif`, `.webp`, `.avif`, or `.svg` renders as an image rather than an iframe — cropped to the top in the card, shown whole in the carousel. Drop files into `public/images/` and use `/images/<file>.png`, or link to an image anywhere on the web.
+Any entry URL that ends in `.png`, `.jpg`, `.gif`, `.webp`, `.avif`, or `.svg` renders as an image rather than an iframe — cropped to the top in the card, shown whole in the carousel. In the editor, each URL field has an **upload** button that puts the file in the Supabase `uploads` bucket (public read, admin write; created by `schema.sql`) and fills the URL in. You can also paste any public image URL, or use `public/images/<file>.png` for images committed to the repo.
 
 ### claude.ai artifact links
 

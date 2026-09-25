@@ -94,3 +94,18 @@ from showcases s,
   ) as v(name, url_a, url_b, sort)
 where s.slug = 'slop-vs-mcp'
   and not exists (select 1 from entries e where e.showcase_id = s.id);
+
+-- ---------- storage: public image bucket ----------
+
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+  values ('uploads', 'uploads', true, 10485760, array['image/*'])
+  on conflict (id) do update set public = true;
+
+drop policy if exists "public read uploads" on storage.objects;
+create policy "public read uploads" on storage.objects for select
+  using (bucket_id = 'uploads');
+
+drop policy if exists "admins write uploads" on storage.objects;
+create policy "admins write uploads" on storage.objects for all
+  using (bucket_id = 'uploads' and is_admin())
+  with check (bucket_id = 'uploads' and is_admin());

@@ -327,6 +327,8 @@ input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.5; cursor: po
   border-bottom: 1px dashed var(--muted);
 }
 .entry-row__tools { display: flex; gap: 0.25rem; }
+.url-slot { display: flex; align-items: end; gap: 0.5rem; min-width: 0; }
+.url-slot .field { flex: 1; }
 .editor__error { display: flex; gap: 1rem; align-items: baseline; }
 @media (max-width: 48rem) {
   .entry-row { grid-template-columns: 1fr; gap: 0.5rem; }

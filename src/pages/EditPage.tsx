@@ -135,6 +135,7 @@ export default function EditPage({ slug, navigate }: Props) {
             onChange={(p) => changeEntry(entry.id, p)}
             onMove={(dir) => move(i, dir)}
             onRemove={() => remove(entry.id)}
+            onError={setError}
           />
         ))}
         <button type="button" className="text-button" onClick={add}>+ add</button>
