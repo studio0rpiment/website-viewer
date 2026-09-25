@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react'
 import Overlay from './Overlay'
-import SiteFrame from './SiteFrame'
+import Media from './Media'
 import SlideCaption from './SlideCaption'
 import Label from './Label'
 import { useSwipe } from '../hooks/useSwipe'
@@ -59,7 +59,7 @@ export default function Carousel({ slides, startIndex, onClose }: Props) {
             <div className="carousel__slide" key={slide.id}>
               {near(i) && (
                 <div className="carousel__frame" data-keep>
-                  <SiteFrame url={slide.url} title={slide.id} interactive />
+                  <Media slide={slide} interactive />
                 </div>
               )}
             </div>

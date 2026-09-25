@@ -12,6 +12,14 @@ export interface Showcase {
   due_date: string | null
   /** Term label shown after the date, e.g. "F26". */
   term: string
+  /** Sites per student: 2 = a/b pair, 1 = single (label_b unused). */
+  slots: 1 | 2
+}
+
+const IMAGE_RE = /\.(png|jpe?g|gif|webp|avif|svg)(\?.*)?$/i
+/** An entry URL that points at an image renders as <img> instead of an iframe. */
+export function isImage(url: string): boolean {
+  return IMAGE_RE.test(url)
 }
 
 /** "22 september F26" — day, lowercase month, term. Empty when there's no date. */
@@ -40,17 +48,23 @@ export interface Slide {
   variant: Variant
   label: string
   url: string
+  kind: 'site' | 'image'
 }
 
 export function toSlides(showcase: Showcase, entries: Entry[]): Slide[] {
+  const variants: Variant[] = showcase.slots === 1 ? ['a'] : ['a', 'b']
   return entries.flatMap((e) =>
-    (['a', 'b'] as Variant[]).map((variant) => ({
-      id: `${e.id}::${variant}`,
-      entryId: e.id,
-      student: e.name,
-      variant,
-      label: variant === 'a' ? showcase.label_a : showcase.label_b,
-      url: variant === 'a' ? e.url_a : e.url_b,
-    })),
+    variants.map((variant) => {
+      const url = variant === 'a' ? e.url_a : e.url_b
+      return {
+        id: `${e.id}::${variant}`,
+        entryId: e.id,
+        student: e.name,
+        variant,
+        label: variant === 'a' ? showcase.label_a : showcase.label_b,
+        url,
+        kind: isImage(url) ? 'image' : 'site',
+      }
+    }),
   )
 }

@@ -20,6 +20,7 @@ function fromJson(): Loaded {
     is_default: true,
     due_date: '2026-09-22',
     term: 'F26',
+    slots: 2,
   }
   const entries: Entry[] = (students as { name: string; slop: string; mcp: string }[]).map((s, i) => ({
     id: `local-${i}`,
@@ -54,7 +55,11 @@ export async function loadShowcase(slug?: string): Promise<Loaded | null> {
 
 export async function listShowcases(): Promise<Showcase[]> {
   if (!supabase) return [fromJson().showcase]
-  const { data, error } = await supabase.from('showcases').select('*').order('created_at')
+  const { data, error } = await supabase
+    .from('showcases')
+    .select('*')
+    .order('due_date', { ascending: false, nullsFirst: false })
+    .order('created_at', { ascending: false })
   if (error) throw error
   return (data ?? []) as Showcase[]
 }
@@ -72,7 +77,7 @@ export async function saveShowcase(patch: Partial<Showcase> & { id: string }) {
   if (error) throw error
 }
 
-export async function createShowcase(input: Pick<Showcase, 'slug' | 'title' | 'label_a' | 'label_b' | 'due_date' | 'term'>) {
+export async function createShowcase(input: Pick<Showcase, 'slug' | 'title' | 'label_a' | 'label_b' | 'due_date' | 'term' | 'slots'>) {
   const { data, error } = await db().from('showcases').insert(input).select().single()
   if (error) throw error
   return data as Showcase

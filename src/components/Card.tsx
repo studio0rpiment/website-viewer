@@ -1,5 +1,5 @@
 import Label from './Label'
-import SiteFrame from './SiteFrame'
+import Media from './Media'
 import type { Slide } from '../types'
 
 interface Props {
@@ -17,7 +17,7 @@ export default function Card({ slide, onSelect }: Props) {
       aria-label={`${slide.student} — ${slide.label}`}
     >
       <div className="card__frame">
-        <SiteFrame url={slide.url} title={slide.id} layoutWidth={1024} />
+        <Media slide={slide} layoutWidth={1024} />
       </div>
       <Label className="label--variant">{slide.label}</Label>
     </button>

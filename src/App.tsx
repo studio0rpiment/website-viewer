@@ -1,3 +1,4 @@
+import HomePage from './pages/HomePage'
 import GalleryPage from './pages/GalleryPage'
 import EditPage from './pages/EditPage'
 import NewPage from './pages/NewPage'
@@ -13,7 +14,9 @@ export default function App() {
       return <EditPage slug={route.slug} navigate={navigate} />
     case 'new':
       return <NewPage navigate={navigate} />
+    case 'gallery':
+      return <GalleryPage slug={route.slug} navigate={navigate} themeMode={theme.mode} onToggleTheme={toggle} />
     default:
-      return <GalleryPage slug={route.slug} themeMode={theme.mode} onToggleTheme={toggle} />
+      return <HomePage navigate={navigate} themeMode={theme.mode} onToggleTheme={toggle} />
   }
 }

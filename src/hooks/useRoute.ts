@@ -1,20 +1,21 @@
 import { useCallback, useEffect, useState } from 'react'
 
 /**
- * Tiny path router — no library needed for three routes.
- *   /             default showcase
+ * Tiny path router — no library needed for four routes.
+ *   /             front page: course title + list of showcases
  *   /new          create a showcase
  *   /:slug        a showcase
  *   /:slug/edit   its editor
  */
 export type Route =
-  | { page: 'gallery'; slug?: string }
+  | { page: 'home' }
+  | { page: 'gallery'; slug: string }
   | { page: 'edit'; slug: string }
   | { page: 'new' }
 
 export function parse(pathname: string): Route {
   const [a, b] = pathname.split('/').filter(Boolean)
-  if (!a) return { page: 'gallery' }
+  if (!a) return { page: 'home' }
   if (a === 'new') return { page: 'new' }
   if (b === 'edit') return { page: 'edit', slug: a }
   return { page: 'gallery', slug: a }

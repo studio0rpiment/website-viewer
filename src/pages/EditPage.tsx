@@ -3,6 +3,7 @@ import Field from '../components/Field'
 import EntryRow from '../components/EntryRow'
 import Label from '../components/Label'
 import SignIn from '../components/SignIn'
+import SlotsPicker from '../components/SlotsPicker'
 import { useSession } from '../hooks/useSession'
 import { useShowcase } from '../hooks/useShowcase'
 import { addEntry, listShowcases, removeEntry, reorderEntries, saveEntry, saveShowcase } from '../lib/data'
@@ -103,8 +104,10 @@ export default function EditPage({ slug, navigate }: Props) {
       <section className="editor__meta">
         <Field label="title" value={showcase.title} onCommit={(title) => changeShowcase({ title })} />
         <Field label="slug" value={showcase.slug} onCommit={(slug) => changeShowcase({ slug: slugify(slug) })} />
-        <Field label="label a" value={showcase.label_a} onCommit={(label_a) => changeShowcase({ label_a })} />
-        <Field label="label b" value={showcase.label_b} onCommit={(label_b) => changeShowcase({ label_b })} />
+        <Field label={showcase.slots === 2 ? "caption a" : "caption"} value={showcase.label_a} onCommit={(label_a) => changeShowcase({ label_a })} />
+        {showcase.slots === 2 && (
+          <Field label="caption b" value={showcase.label_b} onCommit={(label_b) => changeShowcase({ label_b })} />
+        )}
         <label className="field">
           <span className="label label--muted">due date</span>
           <input
@@ -114,13 +117,9 @@ export default function EditPage({ slug, navigate }: Props) {
           />
         </label>
         <Field label="term" value={showcase.term} onCommit={(term) => changeShowcase({ term })} />
-        <label className="field field--check">
-          <input
-            type="checkbox"
-            checked={showcase.is_default}
-            onChange={(e) => changeShowcase({ is_default: e.target.checked })}
-          />
-          <span className="label label--muted">show at /</span>
+        <label className="field">
+          <span className="label label--muted">sites per student</span>
+          <SlotsPicker value={showcase.slots} onChange={(slots) => changeShowcase({ slots })} />
         </label>
       </section>
 

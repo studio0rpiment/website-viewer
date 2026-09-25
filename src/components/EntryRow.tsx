@@ -14,10 +14,12 @@ interface Props {
 /** One editable student row: name, url a, url b, plus move/remove controls. */
 export default function EntryRow({ entry, showcase, index, count, onChange, onMove, onRemove }: Props) {
   return (
-    <div className="entry-row">
+    <div className={`entry-row entry-row--${showcase.slots}`}>
       <Field value={entry.name} placeholder="name" onCommit={(name) => onChange({ name })} className="field--name" />
       <Field value={entry.url_a} placeholder={`${showcase.label_a} url`} onCommit={(url_a) => onChange({ url_a })} />
-      <Field value={entry.url_b} placeholder={`${showcase.label_b} url`} onCommit={(url_b) => onChange({ url_b })} />
+      {showcase.slots === 2 && (
+        <Field value={entry.url_b} placeholder={`${showcase.label_b} url`} onCommit={(url_b) => onChange({ url_b })} />
+      )}
       <div className="entry-row__tools">
         <button type="button" className="text-button" onClick={() => onMove(-1)} disabled={index === 0} aria-label="move up">
           ↑

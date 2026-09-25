@@ -22,7 +22,7 @@ The anon key is safe in the browser — Row Level Security is what protects writ
 
 | path            | what                                                    |
 | --------------- | ------------------------------------------------------- |
-| `/`             | the showcase flagged "show at /"                        |
+| `/`             | front page: course title (`src/site.ts`) + list of showcases, newest due date first |
 | `/:slug`        | a specific showcase                                     |
 | `/:slug/edit`   | its editor — **not linked from anywhere**; sign in required |
 | `/new`          | create a showcase — same, URL only                      |
@@ -35,7 +35,11 @@ Open `/<slug>/edit` and enter the password. The account is fixed to `ADMIN_EMAIL
 
 ## Reusing for another assignment
 
-`/new` → give it a title, slug, and the two labels (they replace "slop" / "mcp+skill" under each card). Tick "show at /" in its editor if it should be the landing showcase.
+`/new` → title, slug, **one site** or **a pair** per student, the caption(s) shown under each card (for a pair: e.g. "slop" / "mcp+skill"), due date, term. All of it is editable later at `/<slug>/edit`.
+
+### Images instead of sites
+
+Any entry URL that ends in `.png`, `.jpg`, `.gif`, `.webp`, `.avif`, or `.svg` renders as an image rather than an iframe — cropped to the top in the card, shown whole in the carousel. Drop files into `public/images/` and use `/images/<file>.png`, or link to an image anywhere on the web.
 
 ### claude.ai artifact links
 

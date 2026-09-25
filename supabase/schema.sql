@@ -12,11 +12,13 @@ create table if not exists showcases (
   is_default  boolean not null default false, -- shown at /
   due_date    date,                             -- assignment due date (optional)
   term        text not null default '',         -- e.g. F26
+  slots       integer not null default 2 check (slots in (1, 2)), -- sites per student
   created_at  timestamptz not null default now()
 );
 -- Additive migrations for databases created before these columns existed.
 alter table showcases add column if not exists due_date date;
 alter table showcases add column if not exists term text not null default '';
+alter table showcases add column if not exists slots integer not null default 2 check (slots in (1, 2));
 
 create table if not exists entries (
   id           uuid primary key default gen_random_uuid(),

@@ -40,6 +40,7 @@ button {
 .label--student { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em; }
 .label--variant { color: var(--muted); }
 .label--muted { color: var(--muted); }
+.label--keep { text-transform: none; } /* term codes like F26, course codes */
 .label--link { color: var(--muted); text-decoration: none; }
 .label--link:hover { color: var(--line); }
 
@@ -52,10 +53,12 @@ button {
   gap: 2.5rem 2rem;
   padding: 4rem 2rem 6rem;
 }
+.gallery--1 { grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); }
 .group { display: flex; flex-direction: column; gap: 0.5rem; }
 .group__pair {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
   gap: 0.75rem;
 }
 
@@ -90,6 +93,17 @@ button {
   transform-origin: 0 0;
   background: #fff; /* sites paint their own bg; white until they load */
 }
+
+.image-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  background: #fff;
+}
+.image-frame--full { object-fit: contain; background: var(--bg); }
 
 .site-frame__missing {
   position: absolute;
@@ -163,7 +177,7 @@ button {
   margin: 0 auto;
 }
 
-/* ---- corner note (due date / term) ---- */
+/* ---- corner note (title · due date) ---- */
 .corner-note {
   position: fixed;
   top: 1rem;
@@ -173,7 +187,45 @@ button {
   height: 2rem;            /* same box as .icon-button so the two sit on one line */
   display: flex;
   align-items: center;
+  gap: 1rem;
 }
+.corner-note:hover { opacity: 1; }
+
+/* ---- home ---- */
+.home {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3rem;
+  padding: 4rem 2rem 6rem;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+.home__title { display: flex; flex-direction: column; gap: 0.5rem; }
+.home__h1 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+.home__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.home__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 2rem;
+  padding: 0.9rem 0;
+  border-top: 1px dashed var(--muted);
+  color: inherit;
+  text-decoration: none;
+}
+.home__list li:last-child .home__item { border-bottom: 1px dashed var(--muted); }
+.home__item:hover { border-top-style: solid; }
+.home__item-title { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+.slots-picker { display: flex; gap: 0.25rem; }
+.slots-picker .is-active { color: var(--line); border-bottom: 1px solid var(--line); }
 
 /* ---- toolbar + controls ---- */
 .toolbar {
@@ -266,6 +318,9 @@ input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.5; cursor: po
 .entry-row {
   display: grid;
   grid-template-columns: 10rem 1fr 1fr auto;
+}
+.entry-row--1 { grid-template-columns: 10rem 1fr auto; }
+.entry-row {
   gap: 1.5rem;
   align-items: end;
   padding-bottom: 0.75rem;

@@ -4,6 +4,7 @@ import SignIn from '../components/SignIn'
 import { useSession } from '../hooks/useSession'
 import { createShowcase } from '../lib/data'
 import { slugify } from './EditPage'
+import SlotsPicker from '../components/SlotsPicker'
 
 interface Props {
   navigate: (path: string) => void
@@ -14,8 +15,9 @@ export default function NewPage({ navigate }: Props) {
   const { session, ready } = useSession()
   const [title, setTitle] = useState('')
   const [slug, setSlug] = useState('')
-  const [labelA, setLabelA] = useState('a')
-  const [labelB, setLabelB] = useState('b')
+  const [slots, setSlots] = useState<1 | 2>(2)
+  const [labelA, setLabelA] = useState('')
+  const [labelB, setLabelB] = useState('')
   const [dueDate, setDueDate] = useState('')
   const [term, setTerm] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -33,6 +35,7 @@ export default function NewPage({ navigate }: Props) {
         label_b: labelB,
         due_date: dueDate || null,
         term,
+        slots,
       })
       navigate(`/${s.slug}/edit`)
     } catch (err) {
@@ -46,8 +49,21 @@ export default function NewPage({ navigate }: Props) {
         <Label className="label--student">new showcase</Label>
         <input type="text" placeholder="title" value={title} required autoFocus onChange={(e) => setTitle(e.target.value)} />
         <input type="text" placeholder={`slug (${slugify(title) || 'from title'})`} value={slug} onChange={(e) => setSlug(e.target.value)} />
-        <input type="text" placeholder="label a" value={labelA} onChange={(e) => setLabelA(e.target.value)} />
-        <input type="text" placeholder="label b" value={labelB} onChange={(e) => setLabelB(e.target.value)} />
+        <SlotsPicker value={slots} onChange={setSlots} />
+        <input
+          type="text"
+          placeholder={slots === 2 ? 'caption under the first site (e.g. slop)' : 'caption under each site (optional)'}
+          value={labelA}
+          onChange={(e) => setLabelA(e.target.value)}
+        />
+        {slots === 2 && (
+          <input
+            type="text"
+            placeholder="caption under the second site (e.g. mcp+skill)"
+            value={labelB}
+            onChange={(e) => setLabelB(e.target.value)}
+          />
+        )}
         <label className="field">
           <span className="label label--muted">due date</span>
           <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
