@@ -31,12 +31,17 @@ export function formatDue(s: Pick<Showcase, 'due_date' | 'term'>): string {
 }
 
 /** One row: a student/group and their two sites. */
+export type Rotation = 0 | 90 | 180 | 270
+
 export interface Entry {
   id: string
   showcase_id: string
   name: string
   url_a: string
   url_b: string
+  /** Display rotation for each image, clockwise degrees. Ignored for sites. */
+  rot_a: Rotation
+  rot_b: Rotation
   sort: number
 }
 
@@ -49,6 +54,7 @@ export interface Slide {
   label: string
   url: string
   kind: 'site' | 'image'
+  rot: Rotation
 }
 
 export function toSlides(showcase: Showcase, entries: Entry[]): Slide[] {
@@ -64,6 +70,7 @@ export function toSlides(showcase: Showcase, entries: Entry[]): Slide[] {
         label: variant === 'a' ? showcase.label_a : showcase.label_b,
         url,
         kind: isImage(url) ? 'image' : 'site',
+        rot: (variant === 'a' ? e.rot_a : e.rot_b) ?? 0,
       }
     }),
   )

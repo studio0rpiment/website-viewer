@@ -5,6 +5,8 @@ interface Props {
   alt: string
   /** Fullscreen: fill the carousel frame, letterboxed. Thumbnail: fit a square, whole image. */
   interactive?: boolean
+  /** Clockwise display rotation. */
+  rot?: 0 | 90 | 180 | 270
 }
 
 /**
@@ -14,7 +16,7 @@ interface Props {
  * cropped. Orientation comes from the browser, which applies EXIF rotation
  * before reporting naturalWidth/Height.
  */
-export default function ImageFrame({ url, alt, interactive = false }: Props) {
+export default function ImageFrame({ url, alt, interactive = false, rot = 0 }: Props) {
   const img = useRef<HTMLImageElement>(null)
   const [landscape, setLandscape] = useState<boolean | null>(null)
 
@@ -30,9 +32,15 @@ export default function ImageFrame({ url, alt, interactive = false }: Props) {
   }, [url])
 
   if (interactive) {
+    const turned = rot === 90 || rot === 270
     return (
       <div className="site-frame">
-        <img src={url} alt={alt} className="image-frame image-frame--full" />
+        <img
+          src={url}
+          alt={alt}
+          className={`image-frame image-frame--full ${turned ? 'is-turned' : ''}`.trim()}
+          style={{ transform: `rotate(${rot}deg)` }}
+        />
       </div>
     )
   }

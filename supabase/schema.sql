@@ -26,9 +26,14 @@ create table if not exists entries (
   name         text not null,                 -- student / group label
   url_a        text not null default '',
   url_b        text not null default '',
+  rot_a        integer not null default 0,   -- display rotation (0/90/180/270) for images
+  rot_b        integer not null default 0,
   sort         integer not null default 0,
   created_at   timestamptz not null default now()
 );
+
+alter table entries add column if not exists rot_a integer not null default 0;
+alter table entries add column if not exists rot_b integer not null default 0;
 
 create index if not exists entries_showcase_sort on entries (showcase_id, sort);
 

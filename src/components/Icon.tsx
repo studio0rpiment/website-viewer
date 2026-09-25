@@ -1,5 +1,5 @@
 interface Props {
-  name: 'sun' | 'moon'
+  name: 'sun' | 'moon' | 'rotate'
   size?: string
 }
 
@@ -11,6 +11,7 @@ const paths: Record<Props['name'], JSX.Element> = {
     </>
   ),
   moon: <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" />,
+  rotate: <path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v4.5h-4.5" />,
 }
 
 /** 1.5px-stroke outline icons, drawn in currentColor. */

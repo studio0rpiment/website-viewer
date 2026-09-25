@@ -356,3 +356,77 @@ input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.5; cursor: po
 @media (max-width: 48rem) {
   .entry-row { grid-template-columns: 1fr; gap: 0.5rem; }
 }
+
+/* ---- flow gallery (single-image showcases) ---- */
+.flow {
+  --tile: 22rem;                 /* longest side of every image */
+  --tile-gap: 0.3125rem;         /* 5px */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--tile-gap);
+  padding: 4rem 2rem 6rem;
+}
+.tile {
+  position: relative;
+  margin: 0;
+  container-type: size;          /* lets the turned <img> use 100cqw / 100cqh */
+  overflow: hidden;
+}
+.tile.is-unmeasured { visibility: hidden; }  /* no flash at the wrong shape */
+.tile__pick {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.tile__img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100cqw;
+  height: 100cqh;
+  translate: -50% -50%;          /* separate property so `transform` is only the rotation */
+  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  display: block;
+}
+.tile__img.is-turned { width: 100cqh; height: 100cqw; }
+.tile::after {                   /* the outline, so it isn't rotated with the image */
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px dashed var(--line);
+  pointer-events: none;
+}
+.tile:hover::after { border-style: solid; }
+.tile__name {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 0.3rem 0.5rem;
+  background: color-mix(in srgb, var(--bg) 75%, transparent);
+  pointer-events: none;
+}
+.tile__rotate {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  opacity: 0;
+  background: color-mix(in srgb, var(--bg) 75%, transparent);
+}
+.tile:hover .tile__rotate, .tile__rotate:focus-visible { opacity: 1; }
+
+/* View Transitions: each tile is its own group; the browser tweens footprints */
+::view-transition-group(*) { animation-duration: 320ms; animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1); }
+::view-transition-old(*), ::view-transition-new(*) { animation: none; mix-blend-mode: normal; }
+
+/* Fullscreen image rotated 90/270: swap the box so it still fits the frame */
+.image-frame--full.is-turned {
+  width: 100cqh;
+  height: 100cqw;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+}
+.carousel__frame { container-type: size; }

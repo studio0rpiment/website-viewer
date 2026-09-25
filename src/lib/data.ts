@@ -28,6 +28,8 @@ function fromJson(): Loaded {
     name: s.name,
     url_a: s.slop,
     url_b: s.mcp,
+    rot_a: 0,
+    rot_b: 0,
     sort: i,
   }))
   return { showcase, entries, fallback: true }

@@ -42,6 +42,8 @@ Open `/edit` and enter the password, then pick a showcase. The account is fixed 
 
 Any entry URL that ends in `.png`, `.jpg`, `.gif`, `.webp`, `.avif`, or `.svg` renders as an image rather than an iframe — cropped to the top in the card, shown whole in the carousel. In the editor, **+ add from images** takes a whole folder's worth of files at once — select them all, and each becomes a row named after its file (`Abigail.jpg` → Abigail) with the image uploaded. Each URL field also has an **upload** button that puts the file in the Supabase `uploads` bucket (public read, admin write; created by `schema.sql`) and fills the URL in. You can also paste any public image URL, or use `public/images/<file>.png` for images committed to the repo.
 
+When every entry in a one-site showcase is an image, the gallery switches to a **flow** layout: tiles sit 5px apart with their longest side equal (`--tile` in `styles.css`), names overlaid. Hover a tile for a **rotate** button — the tile's footprint turns with the image and its neighbours reflow around it (animated with the View Transitions API where supported). Anyone can rotate for their session; when you're signed in as admin the rotation is saved to the entry (`rot_a` / `rot_b`).
+
 ### claude.ai artifact links
 
 `claude.ai/artifact/…` pages refuse to load inside an iframe. Save the artifact's HTML into `public/sites/<name>.html` and use `/sites/<name>.html` as the URL. Vite and Vercel serve `public/` as-is.

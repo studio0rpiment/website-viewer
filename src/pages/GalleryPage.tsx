@@ -1,11 +1,14 @@
 import { useCallback, useMemo, useState } from 'react'
+import { flushSync } from 'react-dom'
 import Gallery from '../components/Gallery'
 import Carousel from '../components/Carousel'
 import ThemeToggle from '../components/ThemeToggle'
 import Toolbar from '../components/Toolbar'
 import Label from '../components/Label'
 import { useShowcase } from '../hooks/useShowcase'
-import { formatDue, toSlides, type Slide } from '../types'
+import { useSession } from '../hooks/useSession'
+import { saveEntry } from '../lib/data'
+import { formatDue, toSlides, type Rotation, type Slide } from '../types'
 import type { ThemeMode } from '../themes'
 
 interface Props {
@@ -16,7 +19,8 @@ interface Props {
 }
 
 export default function GalleryPage({ slug, navigate, themeMode, onToggleTheme }: Props) {
-  const { state } = useShowcase(slug)
+  const { state, patch } = useShowcase(slug)
+  const { session } = useSession()
   const slides = useMemo(
     () => (state.status === 'ready' ? toSlides(state.data.showcase, state.data.entries) : []),
     [state],
@@ -29,6 +33,28 @@ export default function GalleryPage({ slug, navigate, themeMode, onToggleTheme }
     [slides],
   )
   const back = useCallback(() => setOpen(null), [])
+
+  /**
+   * Rotate an image 90°. The change is applied inside a View Transition so the
+   * tile's new footprint — and every neighbour shuffling to make room — animates.
+   * Anyone can rotate for the session; a signed-in admin's rotation is saved.
+   */
+  const rotate = useCallback(
+    (slide: Slide, rot: Rotation) => {
+      const key = slide.variant === 'a' ? 'rot_a' : 'rot_b'
+      const apply = () =>
+        flushSync(() =>
+          patch((d) => ({
+            ...d,
+            entries: d.entries.map((e) => (e.id === slide.entryId ? { ...e, [key]: rot } : e)),
+          })),
+        )
+      if (document.startViewTransition) document.startViewTransition(apply)
+      else apply()
+      if (session) saveEntry({ id: slide.entryId, [key]: rot }).catch(() => {})
+    },
+    [patch, session],
+  )
 
   if (state.status === 'loading') return null
   if (state.status === 'missing') return <Notice>no showcase at /{slug}</Notice>
@@ -52,7 +78,7 @@ export default function GalleryPage({ slug, navigate, themeMode, onToggleTheme }
           <ThemeToggle mode={themeMode} onToggle={onToggleTheme} />
         </Toolbar>
       )}
-      <Gallery slides={slides} slots={showcase.slots} onSelect={select} />
+      <Gallery slides={slides} slots={showcase.slots} onSelect={select} onRotate={rotate} />
       {open !== null && <Carousel slides={slides} startIndex={open} onClose={back} />}
     </>
   )
