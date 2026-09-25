@@ -77,8 +77,14 @@ button {
   overflow: hidden;
   transition: transform 120ms ease;
 }
-.card__frame--image { aspect-ratio: auto; } /* height comes from the image */
+/* Image cards: a square cell with no border of its own; the <img> carries the
+   outline and spans the cell along its longest side (see ImageFrame). */
+.card__frame--image {
+  aspect-ratio: 1 / 1;
+  border: 0;
+}
 .card:hover .card__frame { transform: translateY(-2px); border-style: solid; }
+.card:hover .image-frame--natural { border-style: solid; }
 .card:focus-visible .card__frame { outline: 2px solid var(--line); outline-offset: 2px; }
 
 /* ---- site frame ---- */
@@ -97,7 +103,18 @@ button {
 }
 
 .image-frame { display: block; background: var(--bg); }
-.image-frame--natural { width: 100%; height: auto; }   /* whole image, native ratio */
+/* Absolutely positioned so % heights resolve against the square cell. */
+.image-frame--natural {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px dashed var(--line);
+  box-sizing: border-box;
+  width: 100%;          /* until measured: assume landscape */
+  height: auto;
+}
+.image-frame--natural.is-landscape { width: 100%; height: auto; }
+.image-frame--natural.is-portrait  { height: 100%; width: auto; }
 .image-frame--full {
   position: absolute;
   inset: 0;
