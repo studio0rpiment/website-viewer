@@ -14,7 +14,11 @@ export interface Showcase {
   term: string
   /** Sites per student: 2 = a/b pair, 1 = single (label_b unused). */
   slots: 1 | 2
+  /** Longest side of an image tile in the flow gallery, in rem. */
+  tile: number
 }
+
+export const TILE = { min: 8, max: 48, step: 2, default: 22 }
 
 const IMAGE_RE = /\.(png|jpe?g|gif|webp|avif|svg)(\?.*)?$/i
 /** An entry URL that points at an image renders as <img> instead of an iframe. */

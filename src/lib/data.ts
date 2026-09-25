@@ -21,6 +21,7 @@ function fromJson(): Loaded {
     due_date: '2026-09-22',
     term: 'F26',
     slots: 2,
+    tile: 22,
   }
   const entries: Entry[] = (students as { name: string; slop: string; mcp: string }[]).map((s, i) => ({
     id: `local-${i}`,

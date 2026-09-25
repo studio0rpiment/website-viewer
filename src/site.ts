@@ -1,3 +1,6 @@
+/** App name: browser tab title, favicon alt. */
+export const APP_NAME = 'GW IxD Student Work Viewer'
+
 /** Course identity shown on the front page. Edit here, nowhere else. */
 export const COURSE = {
   code: 'CDES 3110/6110',

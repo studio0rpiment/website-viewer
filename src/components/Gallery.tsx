@@ -5,14 +5,19 @@ import type { Rotation, Slide } from '../types'
 interface Props {
   slides: Slide[]
   slots: 1 | 2
+  tile: number
   onSelect: (slide: Slide) => void
   onRotate: (slide: Slide, rot: Rotation) => void
 }
 
-export default function Gallery({ slides, slots, onSelect, onRotate }: Props) {
-  // One image per student → the tight flow layout with rotation.
-  if (slots === 1 && slides.length > 0 && slides.every((s) => s.kind === 'image')) {
-    return <ImageFlow slides={slides} onSelect={onSelect} onRotate={onRotate} />
+/** True when a showcase renders as the tight image flow (one image per student). */
+export function isFlow(slots: 1 | 2, slides: Slide[]): boolean {
+  return slots === 1 && slides.length > 0 && slides.every((s) => s.kind === 'image')
+}
+
+export default function Gallery({ slides, slots, tile, onSelect, onRotate }: Props) {
+  if (isFlow(slots, slides)) {
+    return <ImageFlow slides={slides} tile={tile} onSelect={onSelect} onRotate={onRotate} />
   }
 
   // Group slides by entry, preserving order.

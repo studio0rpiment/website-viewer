@@ -3,7 +3,7 @@ import Label from '../components/Label'
 import ThemeToggle from '../components/ThemeToggle'
 import Toolbar from '../components/Toolbar'
 import { listShowcases } from '../lib/data'
-import { COURSE } from '../site'
+import { APP_NAME, COURSE } from '../site'
 import { formatDue, type Showcase } from '../types'
 import type { ThemeMode } from '../themes'
 
@@ -19,6 +19,7 @@ export default function HomePage({ navigate, themeMode, onToggleTheme }: Props) 
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    document.title = APP_NAME
     listShowcases().then(setShowcases).catch((e: Error) => setError(e.message))
   }, [])
 

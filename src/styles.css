@@ -254,9 +254,13 @@ button {
   right: 1rem;
   z-index: 20;
   display: flex;
-  gap: 0.5rem;
-  align-items: stretch;
+  flex-direction: column;   /* theme icon on top, other controls beneath */
+  gap: 0.25rem;
+  align-items: center;
 }
+.scale-control { display: flex; flex-direction: column; }
+.scale-control .icon-button { font-size: 1.1rem; line-height: 1; }
+.icon-button:disabled { opacity: 0.25; cursor: default; }
 .icon-button {
   display: grid;
   place-items: center;
@@ -358,18 +362,18 @@ input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.5; cursor: po
 }
 
 /* ---- flow gallery (single-image showcases) ---- */
+/* Tiles are absolutely positioned by the skyline packer (ImageFlow); the
+   container's height is set inline to the packed height. */
 .flow {
-  --tile: 22rem;                 /* longest side of every image */
-  --tile-gap: 0.3125rem;         /* 5px */
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: var(--tile-gap);
-  padding: 4rem 2rem 6rem;
+  position: relative;
+  margin: 4rem 2rem 6rem;
+  box-sizing: content-box;
 }
 .tile {
-  position: relative;
+  position: absolute;
   margin: 0;
+  transition: left 320ms cubic-bezier(0.2, 0.8, 0.2, 1), top 320ms cubic-bezier(0.2, 0.8, 0.2, 1),
+              width 320ms cubic-bezier(0.2, 0.8, 0.2, 1), height 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
   container-type: size;          /* lets the turned <img> use 100cqw / 100cqh */
   overflow: hidden;
 }

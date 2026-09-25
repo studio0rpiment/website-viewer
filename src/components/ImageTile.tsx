@@ -1,35 +1,40 @@
+import { useEffect } from 'react'
 import Icon from './Icon'
 import Label from './Label'
 import { useImageRatio } from '../hooks/useImageRatio'
+import type { Rect } from '../lib/skyline'
 import type { Rotation, Slide } from '../types'
 
 interface Props {
   slide: Slide
+  /** Where the flow put this tile; undefined until the container is measured. */
+  rect?: Rect
+  measured: boolean
+  onMeasure: (id: string, ratio: number) => void
   onSelect: (slide: Slide) => void
   onRotate: (slide: Slide, rot: Rotation) => void
 }
 
 /**
- * One image in a flow gallery. The tile's footprint is the image's *displayed*
- * shape — natural ratio, turned by its rotation — with the longest side fixed
- * at --tile. So a portrait tile is tall and narrow, a landscape one wide and
- * short, and rotating one swaps its footprint, which is what makes the
- * neighbours reflow. The <img> is rotated inside with a transform; for 90/270
- * its box is the tile's box with the axes swapped (container-query units).
+ * One image in the flow. Reports its natural ratio up to the flow (which does
+ * the packing) and renders at the rect it's given. The <img> is rotated inside
+ * with a transform; for 90/270 its box is the tile's box with the axes swapped
+ * (container-query units), so the rotated picture fills the rotated footprint.
  */
-export default function ImageTile({ slide, onSelect, onRotate }: Props) {
+export default function ImageTile({ slide, rect, measured, onMeasure, onSelect, onRotate }: Props) {
   const { ref, ratio, onLoad } = useImageRatio(slide.url)
-  const turned = slide.rot === 90 || slide.rot === 270
-  const shown = ratio === null ? 1 : turned ? 1 / ratio : ratio // displayed w/h
-  const landscape = shown >= 1
+  useEffect(() => {
+    if (ratio) onMeasure(slide.id, ratio)
+  }, [ratio, slide.id, onMeasure])
 
-  const style: React.CSSProperties = landscape
-    ? { width: 'var(--tile)', aspectRatio: String(shown) }
-    : { height: 'var(--tile)', aspectRatio: String(shown) }
+  const turned = slide.rot === 90 || slide.rot === 270
+  const style: React.CSSProperties = rect
+    ? { left: rect.x, top: rect.y, width: rect.w, height: rect.h }
+    : {}
 
   return (
     <figure
-      className={`tile ${ratio === null ? 'is-unmeasured' : ''}`.trim()}
+      className={`tile ${measured && rect ? '' : 'is-unmeasured'}`.trim()}
       style={{ ...style, viewTransitionName: `tile-${slide.entryId}-${slide.variant}` } as React.CSSProperties}
     >
       <button type="button" className="tile__pick" onClick={() => onSelect(slide)} aria-label={slide.student}>
