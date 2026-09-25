@@ -1,20 +1,24 @@
 interface Props {
   url: string
   alt: string
-  /** Thumbnail crops to the top like a site; fullscreen shows the whole image. */
+  /** Fullscreen: fill the carousel frame, letterboxed. Thumbnail: natural ratio, whole image. */
   interactive?: boolean
 }
 
-/** A still image in the same box a SiteFrame would fill. */
+/**
+ * A still image. In the gallery the <img> sets its own height from its native
+ * aspect ratio, so portrait and landscape cards take different shapes and
+ * nothing is cropped. Browsers apply EXIF orientation before reporting
+ * dimensions (`image-orientation: from-image` is the default), so a phone
+ * photo shot upright renders upright.
+ */
 export default function ImageFrame({ url, alt, interactive = false }: Props) {
-  return (
-    <div className="site-frame">
-      <img
-        src={url}
-        alt={alt}
-        loading="lazy"
-        className={`image-frame ${interactive ? 'image-frame--full' : ''}`.trim()}
-      />
-    </div>
-  )
+  if (interactive) {
+    return (
+      <div className="site-frame">
+        <img src={url} alt={alt} className="image-frame image-frame--full" />
+      </div>
+    )
+  }
+  return <img src={url} alt={alt} loading="lazy" className="image-frame image-frame--natural" />
 }

@@ -16,7 +16,7 @@ export default function Card({ slide, onSelect }: Props) {
       onClick={() => onSelect(slide)}
       aria-label={`${slide.student} — ${slide.label}`}
     >
-      <div className="card__frame">
+      <div className={`card__frame ${slide.kind === 'image' ? 'card__frame--image' : ''}`.trim()}>
         <Media slide={slide} layoutWidth={1024} />
       </div>
       <Label className="label--variant">{slide.label}</Label>
