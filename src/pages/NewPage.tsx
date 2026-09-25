@@ -37,7 +37,7 @@ export default function NewPage({ navigate }: Props) {
         term,
         slots,
       })
-      navigate(`/${s.slug}/edit`)
+      navigate(`/edit/${s.slug}`)
     } catch (err) {
       setError((err as Error).message)
     }

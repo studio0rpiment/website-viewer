@@ -16,7 +16,7 @@ interface Props {
 }
 
 /**
- * Editor for one showcase. Reachable only by URL (/:slug/edit) — nothing on
+ * Editor for one showcase. Reachable only by URL (/edit/:slug) — nothing on
  * the gallery links here. Requires a signed-in admin; RLS enforces it too.
  * Every field commits on blur/Enter; the row list updates from the write's
  * result rather than a refetch.
@@ -50,7 +50,7 @@ export default function EditPage({ slug, navigate }: Props) {
     run(async () => {
       await saveShowcase({ id: showcase.id, ...p })
       patch((d) => ({ ...d, showcase: { ...d.showcase, ...p } }))
-      if (p.slug) navigate(`/${p.slug}/edit`)
+      if (p.slug) navigate(`/edit/${p.slug}`)
     })
 
   const changeEntry = (id: string, p: Partial<Entry>) =>
@@ -85,15 +85,16 @@ export default function EditPage({ slug, navigate }: Props) {
       <header className="editor__head">
         <Label className="label--student">{showcase.title || slug}</Label>
         <nav className="editor__nav">
+          <a className="label label--link" href="/edit" onClick={(e) => { e.preventDefault(); navigate('/edit') }}>all showcases</a>
           <a className="label label--link" href={`/${showcase.slug}`}>view ↗</a>
           {others
             .filter((s) => s.id !== showcase.id)
             .map((s) => (
-              <a key={s.id} className="label label--link" href={`/${s.slug}/edit`} onClick={(e) => { e.preventDefault(); navigate(`/${s.slug}/edit`) }}>
+              <a key={s.id} className="label label--link" href={`/edit/${s.slug}`} onClick={(e) => { e.preventDefault(); navigate(`/edit/${s.slug}`) }}>
                 {s.slug}
               </a>
             ))}
-          <a className="label label--link" href="/new" onClick={(e) => { e.preventDefault(); navigate('/new') }}>+ new showcase</a>
+          <a className="label label--link" href="/edit/new" onClick={(e) => { e.preventDefault(); navigate('/edit/new') }}>+ new showcase</a>
           <Label className="label--muted">
             {session.user.email}{isAdmin === false && ' — not an admin'}
           </Label>

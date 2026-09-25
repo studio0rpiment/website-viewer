@@ -1,5 +1,6 @@
 import HomePage from './pages/HomePage'
 import GalleryPage from './pages/GalleryPage'
+import AdminPage from './pages/AdminPage'
 import EditPage from './pages/EditPage'
 import NewPage from './pages/NewPage'
 import { useRoute } from './hooks/useRoute'
@@ -10,6 +11,8 @@ export default function App() {
   const { theme, toggle } = useTheme()
 
   switch (route.page) {
+    case 'admin':
+      return <AdminPage navigate={navigate} />
     case 'edit':
       return <EditPage slug={route.slug} navigate={navigate} />
     case 'new':

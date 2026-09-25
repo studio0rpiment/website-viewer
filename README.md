@@ -24,18 +24,19 @@ The anon key is safe in the browser — Row Level Security is what protects writ
 | --------------- | ------------------------------------------------------- |
 | `/`             | front page: course title (`src/site.ts`) + list of showcases, newest due date first |
 | `/:slug`        | a specific showcase                                     |
-| `/:slug/edit`   | its editor — **not linked from anywhere**; sign in required |
-| `/new`          | create a showcase — same, URL only                      |
+| `/edit`         | admin index — **not linked from anywhere**; sign in required |
+| `/edit/new`     | create a showcase                                       |
+| `/edit/:slug`   | edit a showcase                                         |
 
 `vercel.json` rewrites everything except `/sites/*` to the app so these deep links work on Vercel.
 
 ## Editing
 
-Open `/<slug>/edit` and enter the password. The account is fixed to `ADMIN_EMAIL` in `src/components/SignIn.tsx`; its password is set in Supabase → Authentication → Users (no emails involved). Every field saves when you leave it (blur) or press Enter; Escape reverts. Rows have ↑ ↓ to reorder and × to remove; **+ add** appends a blank row. The header lists other showcases and **+ new showcase**. Only emails in the `admins` table can write — add a row there to let a TA in.
+Open `/edit` and enter the password, then pick a showcase. The account is fixed to `ADMIN_EMAIL` in `src/components/SignIn.tsx`; its password is set in Supabase → Authentication → Users (no emails involved). Every field saves when you leave it (blur) or press Enter; Escape reverts. Rows have ↑ ↓ to reorder and × to remove; **+ add** appends a blank row. The header lists other showcases and **+ new showcase**. Only emails in the `admins` table can write — add a row there to let a TA in.
 
 ## Reusing for another assignment
 
-`/new` → title, slug, **one site** or **a pair** per student, the caption(s) shown under each card (for a pair: e.g. "slop" / "mcp+skill"), due date, term. All of it is editable later at `/<slug>/edit`.
+`/edit/new` → title, slug, **one site** or **a pair** per student, the caption(s) shown under each card (for a pair: e.g. "slop" / "mcp+skill"), due date, term. All of it is editable later at `/edit/<slug>`.
 
 ### Images instead of sites
 
