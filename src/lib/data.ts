@@ -83,6 +83,12 @@ export async function createShowcase(input: Pick<Showcase, 'slug' | 'title' | 'l
   return data as Showcase
 }
 
+/** Removes the showcase and, via the FK cascade, all of its entries. Uploaded files stay in the bucket. */
+export async function deleteShowcase(id: string) {
+  const { error } = await db().from('showcases').delete().eq('id', id)
+  if (error) throw error
+}
+
 export async function saveEntry(patch: Partial<Entry> & { id: string }) {
   const { id, ...rest } = patch
   const { error } = await db().from('entries').update(rest).eq('id', id)

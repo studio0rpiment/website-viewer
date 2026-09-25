@@ -5,9 +5,10 @@ import Label from '../components/Label'
 import SignIn from '../components/SignIn'
 import SlotsPicker from '../components/SlotsPicker'
 import BulkImport from '../components/BulkImport'
+import ConfirmButton from '../components/ConfirmButton'
 import { useSession } from '../hooks/useSession'
 import { useShowcase } from '../hooks/useShowcase'
-import { addEntry, listShowcases, removeEntry, reorderEntries, saveEntry, saveShowcase } from '../lib/data'
+import { addEntry, deleteShowcase, listShowcases, removeEntry, reorderEntries, saveEntry, saveShowcase } from '../lib/data'
 import { supabase } from '../lib/supabase'
 import type { Entry, Showcase } from '../types'
 
@@ -64,6 +65,12 @@ export default function EditPage({ slug, navigate }: Props) {
     run(async () => {
       const row = await addEntry(showcase.id, entries.length)
       patch((d) => ({ ...d, entries: [...d.entries, row] }))
+    })
+
+  const destroy = () =>
+    run(async () => {
+      await deleteShowcase(showcase.id)
+      navigate('/edit')
     })
 
   const remove = (id: string) =>
@@ -149,6 +156,14 @@ export default function EditPage({ slug, navigate }: Props) {
           />
         </div>
       </section>
+
+      <footer className="editor__foot">
+        <ConfirmButton
+          label="delete this showcase"
+          confirmLabel={`delete "${showcase.title}" and its ${entries.length} entries?`}
+          onConfirm={destroy}
+        />
+      </footer>
 
       {error && (
         <footer className="editor__error">
